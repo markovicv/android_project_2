@@ -7,14 +7,14 @@ import com.example.rma_projekat.data.domain.Note
 import com.example.rma_projekat.data.model.Resource
 import com.example.rma_projekat.data.repositories.NotesRepository
 import com.example.rma_projekat.presentation.contracts.NotesContract
-import com.example.rma_projekat.presentation.view.state.DeleteNoteState
-import com.example.rma_projekat.presentation.view.state.InsertNoteState
-import com.example.rma_projekat.presentation.view.state.NotesState
-import com.example.rma_projekat.presentation.view.state.UpdateNoteState
+import com.example.rma_projekat.presentation.view.state.*
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),NotesContract.ViewModel {
 
@@ -23,6 +23,35 @@ class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),N
     override val deleteDone: MutableLiveData<DeleteNoteState> = MutableLiveData()
     private val subsricptions = CompositeDisposable()
     override val updateDone: MutableLiveData<UpdateNoteState> = MutableLiveData()
+    override val arhivedDone: MutableLiveData<ArhivedState> = MutableLiveData()
+
+    private val publishSubject: PublishSubject<String> = PublishSubject.create()
+
+    init {
+        val subscription = publishSubject
+            .debounce(200, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged()
+            .switchMap {
+                notesRepository
+                    .getByTitle(it)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError {
+                        Timber.e("Error in publish subject")
+                        Timber.e(it)
+                    }
+            }
+            .subscribe(
+                {
+                    notesState.value = NotesState.Succes(it)
+                },
+                {
+                    notesState.value = NotesState.Error("Error happened while fetching data from db")
+                    Timber.e(it)
+                }
+            )
+        subsricptions.add(subscription)
+    }
 
     override fun getAllNotes() {
         val subscription = notesRepository
@@ -75,6 +104,24 @@ class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),N
                 updateDone.value = UpdateNoteState.Success("Uspesno updateovan")
             },{
                 updateDone.value = UpdateNoteState.Error("Niste uspesno updateovali")
+            })
+        subsricptions.add(subscription)
+
+    }
+    override fun getByTitle(title:String){
+        publishSubject.onNext(title)
+
+    }
+
+    override fun getArhivedNotes() {
+        val subscription = notesRepository
+            .getArchived()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                notesState.value = NotesState.Archived(it)
+            },{
+                notesState.value = NotesState.Error("Error while fetching notes from db")
             })
         subsricptions.add(subscription)
 

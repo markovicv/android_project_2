@@ -6,6 +6,7 @@ data class Scheduler(
     val profesor:String,
     val ucionica:String,
     val grupe:String,
-    val vreme:String
+    val vreme:String,
+    val dan:String
 ) {
 }

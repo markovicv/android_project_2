@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rma_projekat.MainActivity
 import com.example.rma_projekat.presentation.view.activity.LoginActivity
 import com.example.rma_projekat.presentation.view.activity.NoteActivity
+import com.example.rma_projekat.presentation.view.activity.SchedulerActivity
 
 class SplashScreenActivity :AppCompatActivity() {
 

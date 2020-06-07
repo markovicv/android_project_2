@@ -11,6 +11,7 @@ class SchedulerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bind(scheduler: Scheduler){
         itemView.predmetTv.setText(scheduler.predmet)
         itemView.profesorTv.setText(scheduler.profesor)
-        itemView.ucionicaTv.setText(scheduler.ucionica)
+        itemView.danTv.setText(scheduler.dan)
+        itemView.grupeTv.setText(scheduler.grupe)
     }
 }

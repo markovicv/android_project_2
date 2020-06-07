@@ -8,7 +8,7 @@ class SchedulerDiffCallBack(val oldSchedulerList:List<Scheduler>, val newSchedul
 
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldSchedulerList.get(oldItemPosition).predmet == newSchedulerList.get(newItemPosition).predmet
+        return oldSchedulerList.get(oldItemPosition).id == newSchedulerList.get(newItemPosition).id
 
     }
 
@@ -25,7 +25,7 @@ class SchedulerDiffCallBack(val oldSchedulerList:List<Scheduler>, val newSchedul
         val schedulerNew = newSchedulerList.get(newItemPosition)
 
         return schedulerOld.grupe==schedulerNew.grupe && schedulerOld.profesor == schedulerNew.profesor
-                && schedulerOld.ucionica == schedulerNew.ucionica
+                && schedulerOld.ucionica == schedulerNew.ucionica && schedulerOld.predmet == schedulerNew.predmet
 
 
     }

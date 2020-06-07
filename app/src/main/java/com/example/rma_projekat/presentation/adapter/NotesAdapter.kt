@@ -10,9 +10,11 @@ import com.example.rma_projekat.presentation.diff.NotesDiffCallBack
 import com.example.rma_projekat.presentation.diff.SchedulerDiffCallBack
 import com.example.rma_projekat.presentation.viewholder.NotesViewHolder
 import com.example.rma_projekat.presentation.viewholder.SchedulerViewHolder
+import kotlinx.android.synthetic.main.notes_item.view.*
 
 class NotesAdapter(private val onDeleteBtnClicked:(Note)->Unit,
-                   private val onUpdateBtnClicked:(Note)->Unit
+                   private val onUpdateBtnClicked:(Note)->Unit,
+                   private val onArchiveClicked:(Note)->Unit
                    ):RecyclerView.Adapter<NotesViewHolder>() {
     private var notesList = mutableListOf<Note>()
 
@@ -26,6 +28,14 @@ class NotesAdapter(private val onDeleteBtnClicked:(Note)->Unit,
         },{
             val note = notesList.get(it)
             onUpdateBtnClicked.invoke(note)
+        },{
+            val note = notesList.get(it)
+            onArchiveClicked.invoke(note)
+            if (note.isArhived) {
+                containerView.arhive.setImageResource(R.drawable.ic_save_green_24dp)
+            } else {
+                containerView.arhive.setImageResource(R.drawable.ic_save_black_24dp)
+            }
         })
     }
 

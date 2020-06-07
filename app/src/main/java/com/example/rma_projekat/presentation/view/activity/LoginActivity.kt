@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rma_projekat.MainActivity
 import com.example.rma_projekat.R
 import kotlinx.android.synthetic.main.activity_login.*
 

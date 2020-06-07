@@ -5,7 +5,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_gravity="center_horizontal"
     android:layout_margin="10dp"
-    android:layout_height="150dp">
+    android:layout_height="200dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.044"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.13" />
+            app:layout_constraintVertical_bias="0.092" />
 
         <TextView
             android:id="@+id/profesorTv"
@@ -35,10 +35,10 @@
             app:layout_constraintHorizontal_bias="0.044"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/predmetTv"
-            app:layout_constraintVertical_bias="0.237" />
+            app:layout_constraintVertical_bias="0.123" />
 
         <TextView
-            android:id="@+id/ucionicaTv"
+            android:id="@+id/danTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="rma"
@@ -48,7 +48,20 @@
             app:layout_constraintHorizontal_bias="0.044"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profesorTv"
-            app:layout_constraintVertical_bias="0.529" />
+            app:layout_constraintVertical_bias="0.168" />
+
+        <TextView
+            android:id="@+id/grupeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rma"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.044"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/danTv"
+            app:layout_constraintVertical_bias="0.468" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

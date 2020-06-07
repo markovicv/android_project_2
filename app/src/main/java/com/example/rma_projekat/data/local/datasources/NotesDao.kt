@@ -21,4 +21,7 @@ abstract class NotesDao {
 
     @Update
     abstract fun update(entitiy: NoteEntitiy):Completable
+
+    @Query("SELECT * FROM notes WHERE title LIKE :name || '%'")
+    abstract fun getByTitle(name:String):Observable<List<NoteEntitiy>>
 }

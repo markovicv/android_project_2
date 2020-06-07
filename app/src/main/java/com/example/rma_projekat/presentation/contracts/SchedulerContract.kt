@@ -2,6 +2,7 @@ package com.example.rma_projekat.presentation.contracts
 
 import androidx.lifecycle.LiveData
 import com.example.rma_projekat.data.domain.Scheduler
+import com.example.rma_projekat.data.model.Filter
 import com.example.rma_projekat.presentation.view.state.SchedulerState
 
 interface SchedulerContract {
@@ -10,6 +11,7 @@ interface SchedulerContract {
 
         fun fetchSchedulers()
         fun getAllSchedulers()
+        fun getFiltered(filter:Filter)
 
     }
 }

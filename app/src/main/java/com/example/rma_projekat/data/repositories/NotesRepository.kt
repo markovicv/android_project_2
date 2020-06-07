@@ -12,4 +12,6 @@ interface NotesRepository {
     fun insertAll(notes: List<Note>)
     fun deleteNote(note: Note):Completable
     fun updateNote(note:Note):Completable
+    fun getByTitle(title:String):Observable<List<Note>>
+    fun getArchived():Observable<List<Note>>
 }

@@ -3,6 +3,7 @@ package com.example.rma_projekat.data.repositories
 import com.example.rma_projekat.data.remote.datasources.SchedulerDao
 import com.example.rma_projekat.data.remote.datasources.SchedulerDataSourceRemote
 import com.example.rma_projekat.data.domain.Scheduler
+import com.example.rma_projekat.data.model.Filter
 import com.example.rma_projekat.data.model.Resource
 import com.example.rma_projekat.data.model.SchedulerEntity
 import io.reactivex.Observable
@@ -44,9 +45,20 @@ class SchedulerRepositoryImpl(val schedulerDataSourceRemote: SchedulerDataSource
                         it.nastavnik,
                         it.ucionica,
                         it.grupe,
-                        it.termin
+                        it.termin,
+                        it.dan
                     )
                 }
             }
     }
+    override fun filterCourses(filter: Filter): Observable<List<Scheduler>> {
+        val rawData: Observable<List<Scheduler>> = getAll()
+
+        return rawData.map {
+            it.filter {
+                (filter.grupa == null || it.grupe.contains(filter.grupa, true)) && (filter.predmetProf == null || it.predmet.contains(filter.predmetProf, true) || it.profesor.contains(filter.predmetProf, true)) && (filter.dan == "Dan" || filter.dan.contains(it.dan, true))
+            }
+        }
+    }
+
 }

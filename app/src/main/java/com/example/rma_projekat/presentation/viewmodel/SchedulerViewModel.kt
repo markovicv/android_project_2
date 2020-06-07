@@ -3,6 +3,7 @@ package com.example.rma_projekat.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.rma_projekat.data.domain.Scheduler
+import com.example.rma_projekat.data.model.Filter
 import com.example.rma_projekat.data.model.Resource
 import com.example.rma_projekat.data.repositories.SchedulerRepository
 import com.example.rma_projekat.presentation.contracts.SchedulerContract
@@ -50,6 +51,23 @@ class SchedulerViewModel(private val schedulerRepository: SchedulerRepository):V
 
                 })
         subscriptions.add(subscription )
+    }
+
+    override fun getFiltered(filter: Filter) {
+        val subscription = schedulerRepository
+            .filterCourses(filter)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                schedulerState.value = SchedulerState.Succes(it)
+            },
+                {
+                    schedulerState.value = SchedulerState.Error("Error while fetching from database")
+
+                })
+        subscriptions.add(subscription )
+
+
     }
 
     override fun onCleared() {

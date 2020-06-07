@@ -38,4 +38,24 @@ class NotesRepositoryImpl(private val notesDao: NotesDao):
         val noteEntitiy = NoteEntitiy(note.id,note.title,note.body,note.isArhived)
         return notesDao.update(noteEntitiy)
     }
+
+    override fun getArchived(): Observable<List<Note>> {
+        val notesData = getAll()
+
+        return notesData.map {
+            it.filter {
+                it.isArhived
+            }
+        }
+    }
+
+    override fun getByTitle(title: String): Observable<List<Note>> {
+        return notesDao
+            .getByTitle(title)
+            .map {
+                it.map {
+                    Note(it.id,it.title,it.body,it.isArhived)
+                }
+            }
+    }
 }

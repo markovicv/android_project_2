@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rma_projekat.R
@@ -27,6 +28,10 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        searchNotesId.doAfterTextChanged {
+            notesViewModel.getByTitle(it.toString())
+        }
 
         fabId.setOnClickListener{
             val intent = Intent(this,AddNoteActivity::class.java)
@@ -62,11 +67,36 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
             val intent = Intent(this,UpdateNoteActivity::class.java)
             intent.putExtra("noteK",it)
             startActivity(intent)
+        },{
+            if(it.isArhived){
+                it.isArhived=false
+                notesViewModel.updateNote(it)
+                Toast.makeText(this,"Nije vise arhiviran",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                it.isArhived = true
+                notesViewModel.updateNote(it)
+                Toast.makeText(this,"uspesno arhiviran",Toast.LENGTH_SHORT).show()
+            }
+
+
         })
+        archivedSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                notesViewModel.getArhivedNotes()
+            }
+            else{
+                notesViewModel.getAllNotes()
+            }
+            Timber.e("Shit is $isChecked")
+        }
         notesRv.adapter = notesAdapter
         notesViewModel.notesState.observe(this, Observer {
             when(it){
                 is NotesState.Succes->{
+                    notesAdapter.setNotesList(it.notes)
+                }
+                is NotesState.Archived->{
                     notesAdapter.setNotesList(it.notes)
                 }
                 is NotesState.Error->{
@@ -77,10 +107,8 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
                 }
             }
         })
+
         notesViewModel.getAllNotes()
-
-
-
 
     }
 }
