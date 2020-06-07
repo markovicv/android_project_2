@@ -49,13 +49,21 @@ class NotesRepositoryImpl(private val notesDao: NotesDao):
         }
     }
 
-    override fun getByTitle(title: String): Observable<List<Note>> {
-        return notesDao
-            .getByTitle(title)
-            .map {
-                it.map {
-                    Note(it.id,it.title,it.body,it.isArhived)
-                }
+    override fun getByTitleAndBody(titleBody: String): Observable<List<Note>> {
+        val rawNotes = getAll()
+        return rawNotes.map {
+            it.filter {
+                it.title.contains(titleBody,true) || it.body.contains(titleBody,true)
             }
+        }
+    }
+
+    override fun getNotArchived(): Observable<List<Note>> {
+        val rawNotes = getAll()
+        return rawNotes.map {
+            it.filter {
+                !it.isArhived
+            }
+        }
     }
 }

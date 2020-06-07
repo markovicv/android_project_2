@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rma_projekat.R
+import com.example.rma_projekat.presentation.Konstants
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity:AppCompatActivity(R.layout.activity_login) {
@@ -25,10 +26,10 @@ class LoginActivity:AppCompatActivity(R.layout.activity_login) {
                 return@setOnClickListener
             }
 
-            editor.putBoolean("logged",true)
-            editor.putString("nameLogged",name)
+            editor.putBoolean(Konstants.LOGGED,true)
+            editor.putString(Konstants.LOGGED_NAME,name)
             editor.apply()
-            val intent = Intent(this,NoteActivity::class.java)
+            val intent = Intent(this,SchedulerActivity::class.java)
             startActivity(intent)
             finish()
 

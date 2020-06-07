@@ -33,7 +33,7 @@ class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),N
             .distinctUntilChanged()
             .switchMap {
                 notesRepository
-                    .getByTitle(it)
+                    .getByTitleAndBody(it)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError {
@@ -108,7 +108,7 @@ class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),N
         subsricptions.add(subscription)
 
     }
-    override fun getByTitle(title:String){
+    override fun getByTitleAndBody(title:String){
         publishSubject.onNext(title)
 
     }

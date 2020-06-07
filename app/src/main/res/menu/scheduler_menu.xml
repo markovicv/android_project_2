@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/schedulerMenu"
+        android:title="scheduler"
+        android:icon="@drawable/ic_schedule_black_24dp"/>
+
     <item android:id="@+id/notesMenuId"
         android:title="notes"
         android:icon="@drawable/ic_note_black_24dp"/>
 
     <item android:id="@+id/statMenuId"
-        android:title="stat"
+        android:title="statistics"
         android:icon="@drawable/ic_stat"/>
+
+
 
 
 

@@ -17,7 +17,7 @@ interface NotesContract {
         fun insertNote(note: Note)
         fun deleteNote(note:Note)
         fun updateNote(note:Note)
-        fun getByTitle(title:String)
+        fun getByTitleAndBody(titleBody:String)
         fun getArhivedNotes()
     }
 }

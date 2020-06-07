@@ -56,7 +56,7 @@ class SchedulerRepositoryImpl(val schedulerDataSourceRemote: SchedulerDataSource
 
         return rawData.map {
             it.filter {
-                (filter.grupa == null || it.grupe.contains(filter.grupa, true)) && (filter.predmetProf == null || it.predmet.contains(filter.predmetProf, true) || it.profesor.contains(filter.predmetProf, true)) && (filter.dan == "Dan" || filter.dan.contains(it.dan, true))
+                (it.grupe.contains(filter.grupa, true)) && (it.predmet.contains(filter.predmetProf, true) || it.profesor.contains(filter.predmetProf, true)) && (filter.dan == "dan" || filter.dan.contains(it.dan, true))
             }
         }
     }

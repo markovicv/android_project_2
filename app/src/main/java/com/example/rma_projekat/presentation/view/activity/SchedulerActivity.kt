@@ -1,7 +1,10 @@
 package com.example.rma_projekat.presentation.view.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -17,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SchedulerActivity : AppCompatActivity() {
     private val mainViewModel:SchedulerContract.ViewModel by viewModel<SchedulerViewModel>()
-    private var itemList = arrayOf("dan","ponedeljak","utorak","sreda")
+    private var itemList = arrayOf("dan","ponedeljak","utorak","sreda","cetvrtak","petak","subota","nedelja")
     private var arrayAdapter: ArrayAdapter<String>?=null
     private lateinit var schedulerAdapter:SchedulesAdapter
 
@@ -61,5 +64,24 @@ class SchedulerActivity : AppCompatActivity() {
 
             }
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.scheduler_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.notesMenuId){
+            val intent = Intent(this,NoteActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        else if(item.itemId == R.id.schedulerMenu){
+            val intent = Intent(this,SchedulerActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

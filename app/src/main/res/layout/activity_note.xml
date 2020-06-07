@@ -10,25 +10,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchNotesId"
-        app:layout_constraintVertical_bias="0.129"
         tools:layout_editor_absoluteX="-16dp">
 
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fabId"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="32dp"
         android:src="@drawable/ic_add_box_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notesRv"
-        app:layout_constraintVertical_bias="0.895" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/searchNotesId"

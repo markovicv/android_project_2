@@ -31,11 +31,11 @@ class NotesAdapter(private val onDeleteBtnClicked:(Note)->Unit,
         },{
             val note = notesList.get(it)
             onArchiveClicked.invoke(note)
-            if (note.isArhived) {
-                containerView.arhive.setImageResource(R.drawable.ic_save_green_24dp)
-            } else {
-                containerView.arhive.setImageResource(R.drawable.ic_save_black_24dp)
-            }
+//            if (note.isArhived) {
+//                containerView.arhive.setImageResource(R.drawable.ic_save_green_24dp)
+//            } else {
+//                containerView.arhive.setImageResource(R.drawable.ic_save_black_24dp)
+//            }
         })
     }
 
