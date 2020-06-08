@@ -24,4 +24,7 @@ abstract class NotesDao {
 
     @Query("SELECT * FROM notes WHERE title LIKE :name || '%'")
     abstract fun getByTitle(name:String):Observable<List<NoteEntitiy>>
+
+    @Query("SELECT * FROM notes WHERE isArhived = :isArchived")
+    abstract fun getByArchived(isArchived: Boolean): Observable<List<NoteEntitiy>>
 }

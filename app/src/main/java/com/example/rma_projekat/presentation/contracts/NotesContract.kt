@@ -18,6 +18,7 @@ interface NotesContract {
         fun deleteNote(note:Note)
         fun updateNote(note:Note)
         fun getByTitleAndBody(titleBody:String)
-        fun getArhivedNotes()
+        fun setFilter(checked: Boolean)
+        fun getRecentNoteCount(): List<Int>
     }
 }

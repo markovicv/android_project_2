@@ -64,7 +64,6 @@ class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),N
                 notesState.value = NotesState.Error("Error while fetching notes from db")
             })
         subsricptions.add(subscription)
-
     }
 
     override fun insertNote(note: Note) {
@@ -92,7 +91,6 @@ class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),N
             })
 
         subsricptions.add(subscription)
-
     }
 
     override fun updateNote(note: Note) {
@@ -106,25 +104,18 @@ class NotesViewModel(private val notesRepository: NotesRepository):ViewModel(),N
                 updateDone.value = UpdateNoteState.Error("Niste uspesno updateovali")
             })
         subsricptions.add(subscription)
-
     }
+
+    override fun getRecentNoteCount(): List<Int> {
+        return notesRepository.getRecentNoteCount()
+    }
+
     override fun getByTitleAndBody(title:String){
         publishSubject.onNext(title)
-
     }
 
-    override fun getArhivedNotes() {
-        val subscription = notesRepository
-            .getArchived()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                notesState.value = NotesState.Archived(it)
-            },{
-                notesState.value = NotesState.Error("Error while fetching notes from db")
-            })
-        subsricptions.add(subscription)
-
+    override fun setFilter(checked: Boolean) {
+        notesRepository.setFilter(checked)
     }
 
     override fun onCleared() {

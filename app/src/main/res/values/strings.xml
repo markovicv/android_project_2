@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">RMA_PROJEKAT</string>
     <string name="LOGIN_WORKER_ACTIVITY">Molimo ulogujte se</string>
+    <string name="statistics_title">Statistika beleski u poslednjih 5 dana</string>
 </resources>

@@ -6,9 +6,14 @@ import com.example.rma_projekat.data.model.NoteEntitiy
 import io.reactivex.Completable
 import io.reactivex.Observable
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class NotesRepositoryImpl(private val notesDao: NotesDao):
     NotesRepository {
+
+    var archiveFilter = false;
 
     override fun insert(note: Note): Completable {
         val noteEntitiy = NoteEntitiy(note.id,note.title,note.body,note.isArhived)
@@ -20,33 +25,24 @@ class NotesRepositoryImpl(private val notesDao: NotesDao):
         return notesList.map {
             it.map {
                 Note(it.id,it.title,it.body,it.isArhived)
+            }.filter {
+                archiveFilter || !it.isArhived
             }
         }
     }
 
     override fun insertAll(notes: List<Note>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun deleteNote(note: Note): Completable {
         val noteEntitiy = NoteEntitiy(note.id,note.title,note.body,note.isArhived)
         return notesDao.delete(noteEntitiy)
-
     }
 
     override fun updateNote(note: Note): Completable {
         val noteEntitiy = NoteEntitiy(note.id,note.title,note.body,note.isArhived)
         return notesDao.update(noteEntitiy)
-    }
-
-    override fun getArchived(): Observable<List<Note>> {
-        val notesData = getAll()
-
-        return notesData.map {
-            it.filter {
-                it.isArhived
-            }
-        }
     }
 
     override fun getByTitleAndBody(titleBody: String): Observable<List<Note>> {
@@ -58,12 +54,26 @@ class NotesRepositoryImpl(private val notesDao: NotesDao):
         }
     }
 
-    override fun getNotArchived(): Observable<List<Note>> {
-        val rawNotes = getAll()
-        return rawNotes.map {
-            it.filter {
-                !it.isArhived
-            }
-        }
+    override fun getRecentNoteCount(): List<Int> {
+
+//        val rawNotes = getAll()
+//        return listOf(
+//            rawNotes.map { it.filter { daysDiff(it.created) == 0 } }.count()
+//        )
+
+        return listOf()
     }
+
+    private fun daysDiff(date: String): Long {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val now = Date()
+        val then = sdf.parse(date)
+
+        return TimeUnit.DAYS.convert((now.time - then.time), TimeUnit.MILLISECONDS)
+    }
+
+    override fun setFilter(checked: Boolean) {
+        archiveFilter = checked
+    }
+
 }

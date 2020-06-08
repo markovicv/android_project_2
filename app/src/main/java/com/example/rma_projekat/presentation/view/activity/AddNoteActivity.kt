@@ -11,6 +11,8 @@ import com.example.rma_projekat.presentation.view.state.InsertNoteState
 import com.example.rma_projekat.presentation.viewmodel.NotesViewModel
 import kotlinx.android.synthetic.main.activity_add_note.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddNoteActivity :AppCompatActivity(R.layout.activity_add_note) {
 
@@ -28,7 +30,6 @@ class AddNoteActivity :AppCompatActivity(R.layout.activity_add_note) {
             }
         })
 
-
         addBtn.setOnClickListener {
             val title = titleTv.text.toString()
             val body = bodyTv.text.toString()
@@ -37,6 +38,8 @@ class AddNoteActivity :AppCompatActivity(R.layout.activity_add_note) {
                 return@setOnClickListener
             }
 
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val now = sdf.format(Date())
             val note = Note(0,title,body,false)
             notesViewModel.insertNote(note)
             finish()

@@ -13,6 +13,6 @@ interface NotesRepository {
     fun deleteNote(note: Note):Completable
     fun updateNote(note:Note):Completable
     fun getByTitleAndBody(title:String):Observable<List<Note>>
-    fun getArchived():Observable<List<Note>>
-    fun getNotArchived():Observable<List<Note>>
+    fun setFilter(checked: Boolean)
+    fun getRecentNoteCount(): List<Int>
 }

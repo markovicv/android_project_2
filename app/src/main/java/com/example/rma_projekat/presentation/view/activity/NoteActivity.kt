@@ -53,8 +53,6 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
             }
         })
 
-
-
         notesAdapter = NotesAdapter({
             notesViewModel.deleteNote(it)
         },{
@@ -73,23 +71,15 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
                 Toast.makeText(this,"uspesno arhiviran",Toast.LENGTH_SHORT).show()
             }
 
-
         })
         archivedSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
-                notesViewModel.getArhivedNotes()
-            }
-            else{
-                notesViewModel.getAllNotes()
-            }
+            notesViewModel.setFilter(isChecked)
+            notesViewModel.getAllNotes()
         }
         notesRv.adapter = notesAdapter
         notesViewModel.notesState.observe(this, Observer {
             when(it){
                 is NotesState.Succes->{
-                    notesAdapter.setNotesList(it.notes)
-                }
-                is NotesState.Archived->{
                     notesAdapter.setNotesList(it.notes)
                 }
                 is NotesState.Error->{
@@ -102,7 +92,6 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         })
 
         notesViewModel.getAllNotes()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -111,13 +100,12 @@ class NoteActivity : AppCompatActivity(R.layout.activity_note) {
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.notesMenuId){
-            val intent = Intent(this,NoteActivity::class.java)
+        if(item.itemId == R.id.schedulerMenu){
+            val intent = Intent(this,SchedulerActivity::class.java)
             startActivity(intent)
             finish()
-        }
-        else if(item.itemId == R.id.schedulerMenu){
-            val intent = Intent(this,SchedulerActivity::class.java)
+        } else if (item.itemId == R.id.statMenuId) {
+            val intent = Intent(this,StatisticsActivity::class.java)
             startActivity(intent)
             finish()
         }

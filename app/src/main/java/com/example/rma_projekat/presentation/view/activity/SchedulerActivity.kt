@@ -20,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SchedulerActivity : AppCompatActivity() {
     private val mainViewModel:SchedulerContract.ViewModel by viewModel<SchedulerViewModel>()
-    private var itemList = arrayOf("dan","ponedeljak","utorak","sreda","cetvrtak","petak","subota","nedelja")
+    private var itemList = arrayOf("dan","ponedeljak","utorak","sreda","četvrtak","petak","subota","nedelja")
     private var arrayAdapter: ArrayAdapter<String>?=null
     private lateinit var schedulerAdapter:SchedulesAdapter
 
@@ -77,8 +77,8 @@ class SchedulerActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        else if(item.itemId == R.id.schedulerMenu){
-            val intent = Intent(this,SchedulerActivity::class.java)
+        else if(item.itemId == R.id.statMenuId){
+            val intent = Intent(this,StatisticsActivity::class.java)
             startActivity(intent)
             finish()
         }
